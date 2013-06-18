@@ -17,9 +17,16 @@ on-first-join:
     enabled: true
     delay: 0
     items:
-    - WOOD_PICKAXE
-    - BREAD:5
-    - WOOL:10:6
+     - ==: org.bukkit.inventory.ItemStack
+       type: WOOD_PICKAXE
+     - ==: org.bukkit.inventory.ItemStack
+       type: BREAD
+       amount: 5
+     - ==: org.bukkit.inventory.ItemStack
+       type: WOOL
+       damage: 6
+       amount: 10
+
   give-written-books:
     enabled: false
     delay: 0

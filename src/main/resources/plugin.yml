@@ -20,6 +20,8 @@ permissions:
     description: Permission to use the /firstjoinplus setspawn command.
   firstjoinplus.items:
     description: Permission to use the /firstjoinplus items command.
+  firstjoinplus.setitems:
+    description: Permission to use the /firstjoinplus setitems command.
   firstjoinplus.spawn:
     description: Permission to use the /firstjoinplus spawn command.
   firstjoinplus.notify:

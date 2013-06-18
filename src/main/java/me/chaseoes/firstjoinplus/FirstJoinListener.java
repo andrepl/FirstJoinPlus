@@ -122,11 +122,6 @@ public class FirstJoinListener implements Listener {
             }, invincible * 20L);
         }
 
-        // Written books!
-        if (plugin.getConfig().getBoolean("on-first-join.give-written-books.enabled")) {
-            Utilities.getUtilities().giveWrittenBooks(player);
-        }
-        
         // Apply potion effects!
         if (plugin.getConfig().getBoolean("on-first-join.apply-potion-effects.enabled")) {
             List<PotionEffect> effects = new ArrayList<PotionEffect>();

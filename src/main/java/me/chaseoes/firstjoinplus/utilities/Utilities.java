@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 
 import me.chaseoes.firstjoinplus.FirstJoinPlus;
@@ -61,25 +63,28 @@ public class Utilities {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                for (String itemStr : plugin.getConfig().getStringList("on-first-join.give-items.items")) {
-                    ItemStack i;
-                    String[] itemValues = itemStr.split("\\:");
-
-                    if (isNumber(itemValues[0])) {
-                        i = new ItemStack(Material.getMaterial(Integer.parseInt(itemValues[0])));
+                for (Object item : plugin.getConfig().getList("on-first-join.give-items.items")) {
+                    if (item instanceof ItemStack) {
+                        player.getInventory().addItem((ItemStack) item);
                     } else {
-                        i = new ItemStack(Material.getMaterial(itemValues[0].toUpperCase()));
-                    }
+                        ItemStack i;
+                        String[] itemValues = ((String) item).split("\\:");
 
-                    if (itemValues.length > 1) {
-                        i.setAmount(Integer.parseInt(itemValues[1]));
-                    }
+                        if (isNumber(itemValues[0])) {
+                            i = new ItemStack(Material.getMaterial(Integer.parseInt(itemValues[0])));
+                        } else {
+                            i = new ItemStack(Material.getMaterial(itemValues[0].toUpperCase()));
+                        }
 
-                    if (itemValues.length > 2) {
-                        i = new ItemStack(i.getType(), i.getAmount(), (short) Integer.parseInt(itemValues[2]));
-                    }
+                        if (itemValues.length > 1) {
+                            i.setAmount(Integer.parseInt(itemValues[1]));
+                        }
 
-                    player.getInventory().addItem(i);
+                        if (itemValues.length > 2) {
+                            i = new ItemStack(i.getType(), i.getAmount(), (short) Integer.parseInt(itemValues[2]));
+                        }
+                        player.getInventory().addItem(i);
+                    }
                 }
             }
         }, plugin.getConfig().getLong("on-first-join.give-items.delay"));
@@ -187,5 +192,17 @@ public class Utilities {
         }
         return "N/A";
     }
+
+    public void setItemsFromInventory(Player player) {
+        List<ItemStack> items = new LinkedList<ItemStack>();
+        for (ItemStack stack: player.getInventory().getContents()) {
+            if (stack != null) {
+                items.add(stack);
+            }
+        }
+        plugin.getConfig().set("on-first-join.give-items.items", items);
+        plugin.saveConfig();
+    }
+
 
 }

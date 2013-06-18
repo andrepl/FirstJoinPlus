@@ -142,12 +142,18 @@ public class FirstJoinPlus extends JavaPlugin {
             }
         }
 
+        if (strings[0].equalsIgnoreCase("setitems")) {
+            if (cs.hasPermission("firstjoinplus.setitems")) {
+                Utilities.getUtilities().setItemsFromInventory(player);
+                cs.sendMessage(prefix + ChatColor.GREEN + "Successfully set the first join items to your current inventory.");
+            } else {
+                cs.sendMessage(noPermission);
+            }
+        }
+
         if (strings[0].equalsIgnoreCase("items")) {
             if (cs.hasPermission("firstjoinplus.items")) {
                 Utilities.getUtilities().giveFirstJoinItems(player);
-                if (getConfig().getBoolean("on-first-join.give-written-books.enabled")) {
-                    Utilities.getUtilities().giveWrittenBooks(player);
-                }
                 cs.sendMessage(prefix + ChatColor.GREEN + "Successfully gave all defined items.");
             } else {
                 cs.sendMessage(noPermission);
